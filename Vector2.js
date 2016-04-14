@@ -11,6 +11,16 @@ var Vector2 = function()
 	{
 		this.y = y;
 	}
+	
+	this.reverse = function()
+	{
+		this.x = -this.x;
+		this.y = -this.y;
+	};
+	this.copy = function()
+	{
+		return new Vector2(this.x, this.y);
+	}
 	this.set = function(newX, newY)
 	{
 		this.x = newX;
