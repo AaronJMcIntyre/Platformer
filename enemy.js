@@ -33,4 +33,4 @@ Enemy.prototype.draw = function()
 {
 	DrawImage(context, this.image, this.position.x,
 	this.position.y, 0);
-};
+};     
