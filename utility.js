@@ -39,5 +39,5 @@ return true;
 }
 function rand(floor, ceil)
 {
-	(Math.random() * (ceil-floor)) + floor;
+	return (Math.random() * (ceil-floor)) + floor;
 }

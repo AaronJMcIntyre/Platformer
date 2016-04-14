@@ -1,4 +1,4 @@
-var Vector2 = function()
+var Vector2 = function(x, y)
 {
 	this.x = 0;
 	this.y = 0;
@@ -28,7 +28,7 @@ var Vector2 = function()
 	};
 	this.magnitude = function()
 	{
-		return math.sqrt(this.x*this.x + this.y*this.y);
+		return Math.sqrt(this.x*this.x + this.y*this.y);
 	};
 	this.normalize = function()
 	{
