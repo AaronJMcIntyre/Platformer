@@ -13,10 +13,13 @@ function setupImageEvents(object, img)
 }
 
 
-function DrawImage(ctx, img, x, y, rot)
+function DrawImage(ctx, img, x, y, rot, scaleX, scaleY)
 {
-	ctx.save();
+
+ctx.save();
+
 	ctx.translate(x, y);
+	ctx.scale (scaleX || 1, scaleY || 1);
 	ctx.rotate(rot);
 	ctx.drawImage (img, -img.width/2, -img.height/2);
 	ctx.restore();
