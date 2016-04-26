@@ -29,6 +29,68 @@ function getDeltaTime()
 
 //-------------------- Don't modify anything above here
 
+
+var STATE_SPLASH = 0;
+var STATE_GAME = 1;
+var STATE_GAMEOVER = 2;
+
+var gameState = STATE_SPLASH;
+var splashTimer = 3;
+function runSplash(deltaTime)
+{
+	splashTimer -= deltaTime;
+if(splashTimer <= 0)
+{
+gameState = STATE_GAME;
+return;
+}
+context.fillStyle = "#000";
+context.font="24px Arial";
+context.fillText("SPLASH SCREEN", 200, 240);
+}
+function runGame(deltaTime)
+{
+	
+	
+	context.save();
+	if (player.position.x >= viewOffset.x + canvas.width/2)
+	{
+		viewOffset.x = player.position.x - canvas.width/2;
+	}
+	context.translate(-viewOffset.x, 0);  
+	  drawMap();
+	
+	player.update(deltaTime);
+	player.draw();
+		
+	context.restore();
+		
+	// update the frame counter 
+	fpsTime += deltaTime;
+	fpsCount++;
+	if(fpsTime >= 1)
+	{
+		fpsTime -= 1;
+		fps = fpsCount;
+		fpsCount = 0;
+	}		
+		
+	// draw the FPS
+	context.fillStyle = "#f00";
+	context.font="14px Arial";
+	context.fillText("FPS: " + fps, 5, 20, 100);
+
+	
+	
+	
+	
+	}
+function runGameOver(deltaTime)
+{
+	
+}
+
+
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
@@ -204,33 +266,21 @@ function run()
 	
 	var deltaTime = getDeltaTime();
 	
-	context.save();
-	if (player.position.x >= viewOffset.x + canvas.width/2)
-	{
-		viewOffset.x = player.position.x - canvas.width/2;
-	}
-	context.translate(-viewOffset.x, 0);  
-	  drawMap();
+	switch(gameState)
+{
+case STATE_SPLASH:
+runSplash(deltaTime);
+break;
+case STATE_GAME:
+runGame(deltaTime);
+break;
+case STATE_GAMEOVER:
+runGameOver(deltaTime);
+break;
+}
+
+		
 	
-	player.update(deltaTime);
-	player.draw();
-		
-	context.restore();
-		
-	// update the frame counter 
-	fpsTime += deltaTime;
-	fpsCount++;
-	if(fpsTime >= 1)
-	{
-		fpsTime -= 1;
-		fps = fpsCount;
-		fpsCount = 0;
-	}		
-		
-	// draw the FPS
-	context.fillStyle = "#f00";
-	context.font="14px Arial";
-	context.fillText("FPS: " + fps, 5, 20, 100);
 }
 
 initialize();
