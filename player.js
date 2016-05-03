@@ -11,13 +11,6 @@ var ANIM_WALK_RIGHT = 5;
 var ANIM_MAX = 6;
 
 var ANIM_CLIMB = 7;
-var ANIM_SHOOT_LEFT = 8;
-var ANIM_SHOOT_RIGHT = 9;
-
-
-
-
-
 
 
 
@@ -78,6 +71,7 @@ Player.prototype.update = function(deltaTime)
 	
 	
 	
+	
 	// check keypress events
 	if(keyboard.iskeyDown(keyboard.KEY_LEFT) == true) {
 		left = true;
@@ -94,7 +88,7 @@ Player.prototype.update = function(deltaTime)
 		right = true;
 		this.direction = RIGHT;
 		if(this.sprite.currentAnimation != ANIM_WALK_RIGHT &&
-		this.jumping == false)
+		this.jumping == false)         
 			this.sprite.setAnimation(ANIM_WALK_RIGHT);
 	}
 	
@@ -107,6 +101,7 @@ Player.prototype.update = function(deltaTime)
 			{
 				if(this.sprite.currentAnimation != ANIM_IDLE_LEFT)
 			    this.sprite.setAnimation(ANIM_IDLE_LEFT);
+			
 			}
 			else
 			{
@@ -120,16 +115,18 @@ Player.prototype.update = function(deltaTime)
 	
 	
 	
-	if(keyboard.iskeyDown(keyboard.KEY_SPACE) == true) 
+	if(keyboard.iskeyDown(keyboard.KEY_SPACE) == true)  
 	{
 		jump = true;
-		if(left == true) {
+		jumping = true;
+		if (this.direction == LEFT) {
 			this.sprite.setAnimation(ANIM_JUMP_LEFT);
 		}
 		if(right == true)  {
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT);
 		}
 	}
+	
 	
 	
 	
