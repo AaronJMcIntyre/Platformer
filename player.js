@@ -34,7 +34,7 @@ var Player = function() {
 	      [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78]);
 		  
 		  
-	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,            //climbing animation!
+	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,            //climbing animation! ---I think. 
 	      [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,]);
 		  
 		  
