@@ -17,6 +17,9 @@ var ANIM_CLIMB = 7;
 
 
 var Player = function() {	
+
+this.cooldownTimer = 0;
+
     this.sprite = new Sprite("ChuckNorris.png");
 	
 	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
@@ -115,7 +118,7 @@ Player.prototype.update = function(deltaTime)
 	
 	
 	
-	if(keyboard.iskeyDown(keyboard.KEY_SPACE) == true)  
+	if(keyboard.iskeyDown(keyboard.KEY_UP) == true)  
 	{
 		jump = true;
 		jumping = true;
@@ -126,8 +129,17 @@ Player.prototype.update = function(deltaTime)
 			this.sprite.setAnimation(ANIM_JUMP_RIGHT);
 		}
 	}
-	
-	
+	 
+	 if(this.cooldownTimer > 0)
+	 {
+		 this.cooldownTimer -=deltaTime;
+	 }
+	if(keyboard.iskeyDown(keyboard.KEY_SPACE) ==true && this.cooldownTimer <=0) {
+		sfxFire.play();
+		this.cooldownTimer = 0.3;
+		
+		//shoot a bullet
+	}
 	
 	
 	
@@ -162,8 +174,8 @@ Player.prototype.update = function(deltaTime)
 	
 	
 	// calculate the new position and velocity:
-	this.position.y = Math.floor(this.position.y + (deltaTime * this.velocity.y));
-	this.position.x = Math.floor(this.position.x + (deltaTime * this.velocity.x));
+	this.position.y = Math.round(this.position.y + (deltaTime * this.velocity.y));
+	this.position.x = Math.round(this.position.x + (deltaTime * this.velocity.x));
 	this.velocity.x = bound(this.velocity.x + (deltaTime * ddx), -MAXDX, MAXDX);
 	this.velocity.y = bound(this.velocity.y + (deltaTime * ddy), -MAXDY, MAXDY);
 

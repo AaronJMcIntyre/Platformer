@@ -28,6 +28,12 @@ function getDeltaTime()
 }
 
 //-------------------- Don't modify anything above here
+ var score = 0;
+var lives = 3;
+
+var heartImage = document.createElement("img")
+heartImage.src = "smallheart.png";
+
 
 
 var STATE_SPLASH = 0;
@@ -44,12 +50,14 @@ if(splashTimer <= 0)
 gameState = STATE_GAME;
 return;
 }
+
 context.fillStyle = "#000";
 context.font="24px Arial";
 context.fillText("SPLASH SCREEN", 200, 240);
 }
 function runGame(deltaTime)
 {
+	
 	
 	
 	context.save();
@@ -78,9 +86,8 @@ function runGame(deltaTime)
 	// draw the FPS
 	context.fillStyle = "#f00";
 	context.font="14px Arial";
-	context.fillText("FPS: " + fps, 5, 20, 100);
+	context.fillText("FPS: " + fps, 3, 10, 100);
 
-	
 	
 	
 	
@@ -201,9 +208,6 @@ var viewOffset = new Vector2();
 {
 	
 	
-	
-	
-	
 for(var layerIdx=0; 
 layerIdx<LAYER_COUNT; 
 layerIdx++)
@@ -233,6 +237,10 @@ idx++;
 }
 
 var cells = []; // the array that holds our simplified collision data
+
+var musicBackground;
+var sfxFire;
+
 function initialize() {
  for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) { // initialize the collision map
  cells[layerIdx] = [];
@@ -257,12 +265,49 @@ cells[layerIdx][y][x+1] = 1;
  }
  }
  }
-}
+ 	musicBackground = new Howl(
+ {
+	 urls: ["musicBackground.ogg"],
+	 loop: true,
+	 buffer: true,
+	 volume: 0.5
+} );
+musicBackground.play();
 
+sfxFire = new Howl(
+      {
+		  urls: ["fireEffect.ogg"],
+		  buffer: true,
+		  volume: 1,
+		  onend: function() {
+			  isSfxPlaying = false;
+		  }
+	  } );
+}
 function run()
 {
+	
+	
 	context.fillStyle = "#ccc";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
+	
+	
+//life counter
+		
+	context.fillStyle = "#000000";
+	context.font = "32px Ariel";
+	var scoreText = "Score: "+ score;
+	context.fillText(scoreText, SCREEN_WIDTH - 170, 35)
+	
+	
+	
+		
+	
+	for(var i=0; i<lives; i++)
+	{
+		context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
+	}
+	
 	
 	var deltaTime = getDeltaTime();
 	
@@ -283,7 +328,10 @@ break;
 	
 }
 
-initialize();
+
+
+initialize (); 
+
 
 
 
