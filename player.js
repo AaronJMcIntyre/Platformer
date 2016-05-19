@@ -16,11 +16,16 @@ var ANIM_CLIMB = 7;
 
 
 
+
 var Player = function() {	
+
+
 
 this.cooldownTimer = 0;
 
+
     this.sprite = new Sprite("ChuckNorris.png");
+
 	
 	this.sprite.buildAnimation(12, 8, 165, 126, 0.05,
           [0, 1, 2, 3, 4, 5, 6, 7]);
@@ -60,7 +65,7 @@ this.cooldownTimer = 0;
 
 
 
-	
+
 };
 
 Player.prototype.update = function(deltaTime)
@@ -70,7 +75,7 @@ Player.prototype.update = function(deltaTime)
     var left = false;
 	var right = false;
 	var jump = false;
-	
+	var Dead = false;
 	
 	
 	
@@ -134,7 +139,10 @@ Player.prototype.update = function(deltaTime)
 	 {
 		 this.cooldownTimer -=deltaTime;
 	 }
+	
 	if(keyboard.iskeyDown(keyboard.KEY_SPACE) ==true && this.cooldownTimer <=0) {
+		
+		shoot ();
 		sfxFire.play();
 		this.cooldownTimer = 0.3;
 		
@@ -237,10 +245,9 @@ else if (this.velocity.x < 0) {
 
 
 Player.prototype.draw = function()
-{
-	
-    this.sprite.draw(context, this.position.x, this.position.y);
+	{
+    this.sprite.draw(context, this.position.x, this.position.y)
     
-	
+
 }
 

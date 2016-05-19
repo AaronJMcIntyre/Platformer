@@ -4,12 +4,14 @@ var Enemy = function(x, y)
 	
 	//new
 	this.sprite = new Sprite("bat.png")
-	this.sprite.buildAnimation(2, 1, 88, 94, 0.3, [0,1]);
+	this.sprite.buildAnimation(2, 1, 48, 48, 0.2, [0,1]);
 	this.sprite.setAnimation(0, -35, -40);
 	
 	this.position = new Vector2();
-	this.position.set(x, y);
+	this.position.set(x, y); 
 	
+
+   
 	this.velocity = new Vector2();
 	
 	this.moveRight = true;
@@ -79,4 +81,5 @@ Enemy.prototype.update = function(deltaTime)
 Enemy.prototype.draw = function()
 {
 	this.sprite.draw(context, this.position.x, this.position.y);
+	
 };

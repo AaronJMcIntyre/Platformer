@@ -80,6 +80,11 @@ function runGame(deltaTime)
 	{
 		enemies[i].draw(deltaTime);
 	}
+	
+	for(var i=0; i<bullets.length; i++)
+	{
+		bullets[i].draw();
+	}
 	// enemy update and draw.
 	context.restore();
 		
@@ -123,7 +128,7 @@ var fpsTime = 0;
 var chuckNorris = document.createElement("img");
 chuckNorris.src = "hero.png";
 
-
+var bullets = [];
 
 
 var enemies = [];
@@ -217,9 +222,16 @@ var player = new Player();
 
 var keyboard = new Keyboard();
 
-var viewOffset = new Vector2(); 
+var viewOffset = new Vector2();
 
+ 
 
+function shoot (){
+	var bullet = new Bullet(
+	player.position.x, player.position.y, player.direction == RIGHT);
+	bullets.push(bullet);
+
+}
 
  function drawMap()
 {
@@ -348,6 +360,45 @@ function run()
 	
 	
 	var deltaTime = getDeltaTime();
+	
+	
+	
+	
+	
+	
+	
+	var hit=false;
+	for(var i=0; i<bullets.length; i++)
+	{
+		bullets[i].update(deltaTime);
+		if( bullets[i].position.x < 0 || 
+		bullets[i].position.x > SCREEN_WIDTH)
+		{
+			hit = true;
+		}
+		
+		for(var j=0; j<enemies.length; j++)
+		{
+			if(intersects( bullets[i].position.x, bullets[i].position.y, TILE, TILE,
+			enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+			{
+				// kill both bullet + enemy
+				enemies.splice(j, 1);
+				hit =true;
+				// increase player score.
+				score += 1;
+				break;
+			}
+		}
+		if(hit == true)
+		{
+			bullets.splice(i, 1);
+			break;
+		}
+	}
+	
+	
+	
 	
 	switch(gameState)
 {
