@@ -109,7 +109,9 @@ function runGame(deltaTime)
 	}
 function runGameOver(deltaTime)
 {
-	
+	context.fillStyle = "#f00";
+context.font="72px Arial";
+context.fillText("GAMEOVER", 100, 240);
 }
 
 
@@ -351,6 +353,11 @@ function run()
 	
 	
 	
+	
+	
+	
+	
+	
 			
 	
 	for(var i=0; i<lives; i++)
@@ -362,10 +369,29 @@ function run()
 	var deltaTime = getDeltaTime();
 	
 	
+	if (lives == 0){
+	gameState = STATE_GAMEOVER
+	}
 	
 	
+	for(var j=0; j<enemies.length; j++)
+	{
 	
+		if(intersects( player.position.x, player.position.y, TILE, TILE,
+			enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+			{
+				enemies.splice(j, 1);
+				lives -=1;
+				
+				break;
 	
+}}
+	
+	if (player.position.y > 1000){
+	
+	lives -=1;
+	
+	}
 	
 	var hit=false;
 	for(var i=0; i<bullets.length; i++)
