@@ -241,6 +241,12 @@ else if (this.velocity.x < 0) {
 		this.velocity.x = 0;
 	}
 }
+
+if(cellAtTileCoord(LAYER_OBJECT_TRIGGERS, tx, ty) == true)
+	{
+		gamestate = STATE_GAMEOVER
+	}
+
 }
 
 
