@@ -423,6 +423,7 @@ function run()
 	if (lives == 0){
 	gameState = STATE_GAMEOVER
 	}
+<<<<<<< HEAD
 	
 	
 	for(var j=0; j<enemies.length; j++)
@@ -448,10 +449,28 @@ function run()
 	
 	}
 	
+=======
+>>>>>>> origin/master
 	
 	
+	for(var j=0; j<enemies.length; j++)
+	{
 	
+		if(intersects( player.position.x, player.position.y, TILE, TILE,
+			enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+			{
+				enemies.splice(j, 1);
+				lives -=1;
+				
+				break;
 	
+}}
+	
+	if (player.position.y > 1000){
+	
+	lives -=1;
+	
+	}
 	
 	var hit=false;
 	for(var i=0; i<bullets.length; i++)
