@@ -423,7 +423,7 @@ function run()
 	if (lives == 0){
 	gameState = STATE_GAMEOVER
 	}
-<<<<<<< HEAD
+
 	
 	
 	for(var j=0; j<enemies.length; j++)
@@ -449,8 +449,8 @@ function run()
 	
 	}
 	
-=======
->>>>>>> origin/master
+
+
 	
 	
 	for(var j=0; j<enemies.length; j++)
