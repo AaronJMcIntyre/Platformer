@@ -40,6 +40,7 @@ var STATE_SPLASH = 0;
 var STATE_GAME = 1;
 var STATE_GAMEOVER = 2;
 
+
 var gameState = STATE_SPLASH;
 var splashTimer = 3;
 function runSplash(deltaTime)
@@ -55,6 +56,10 @@ context.fillStyle = "#000";
 context.font="24px Arial";
 context.fillText("SPLASH SCREEN", 200, 240);
 }
+
+
+
+
 function runGame(deltaTime)
 {
 	
@@ -67,9 +72,18 @@ function runGame(deltaTime)
 	}
 	context.translate(-viewOffset.x, 0);  
 	  drawMap();
+	  
 	
 	player.update(deltaTime);
+	
+	
+	
+	
 	player.draw();
+	
+	
+	
+	
 		// enemy update and draw
 		for(var i=0; i<enemies.length; i++)
 	{
@@ -87,6 +101,9 @@ function runGame(deltaTime)
 	}
 	// enemy update and draw.
 	context.restore();
+	
+	
+	
 		
 	// update the frame counter 
 	fpsTime += deltaTime;
@@ -109,7 +126,9 @@ function runGame(deltaTime)
 	}
 function runGameOver(deltaTime)
 {
-	
+	context.fillStyle = "#f00";
+context.font="72px Arial";
+context.fillText("GAMEOVER", 100, 240);
 }
 
 
@@ -129,6 +148,7 @@ var chuckNorris = document.createElement("img");
 chuckNorris.src = "hero.png";
 
 var bullets = [];
+
 
 
 var enemies = [];
@@ -224,7 +244,7 @@ var keyboard = new Keyboard();
 
 var viewOffset = new Vector2();
 
- 
+
 
 function shoot (){
 	var bullet = new Bullet(
@@ -241,6 +261,8 @@ for(var layerIdx=0;
 layerIdx<LAYER_COUNT; 
 layerIdx++)
 {
+	if(layerIdx ==  LAYER_OBJECT_ENEMIES)
+		continue;
  
  var offsetx = level1.layers[layerIdx].offsetx || 0;
  var offsety = level1.layers[layerIdx].offsety ||0;
@@ -273,8 +295,7 @@ var sfxFire;
 function initialize() {
 	
 	
-	
-	
+
 	
 // add enemies.
 var idx = 0;
@@ -315,6 +336,34 @@ cells[layerIdx][y][x+1] = 1;
  }
  }
  }
+ 
+ 
+ 
+ // initialize trigger layer in collision map
+	cells[LAYER_OBJECT_TRIGGERS] = [];
+	idx = 0;
+	for(var y = 0; y < level1.layers[LAYER_OBJECT_TRIGGERS].height; y++) {
+		cells[LAYER_OBJECT_TRIGGERS][y] = [];
+		for(var x =0; x < level1.layers[LAYER_OBJECT_TRIGGERS].width; x++) {
+			if(level1.layers[LAYER_OBJECT_TRIGGERS].data[idx] != 0) {
+				cells[LAYER_OBJECT_TRIGGERS][y][x] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y-1][x] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y-1][x+1] = 1;
+				cells[LAYER_OBJECT_TRIGGERS][y][x+1] = 1;
+			}
+			else if(cells[LAYER_OBJECT_TRIGGERS][y][x] != 1) {
+				// if we havent set this cells value, then set it 0 now.
+				cells[LAYER_OBJECT_TRIGGERS][y][x] = 0;
+			}
+			idx++;
+		}
+	
+	}
+ 
+ 
+ 
+ 
+ 
  	musicBackground = new Howl(
  {
 	 urls: ["musicBackground.ogg"],
@@ -333,6 +382,10 @@ sfxFire = new Howl(
 			  isSfxPlaying = false;
 		  }
 	  } );
+	  
+	  
+	  
+	  
 }
 function run()
 {
@@ -351,6 +404,11 @@ function run()
 	
 	
 	
+	
+	
+	
+	
+	
 			
 	
 	for(var i=0; i<lives; i++)
@@ -362,6 +420,34 @@ function run()
 	var deltaTime = getDeltaTime();
 	
 	
+	if (lives == 0){
+	gameState = STATE_GAMEOVER
+	}
+	
+	
+	for(var j=0; j<enemies.length; j++)
+	{
+	
+		if(intersects( player.position.x, player.position.y, TILE, TILE,
+			enemies[j].position.x, enemies[j].position.y, TILE, TILE) == true)
+			{
+				enemies.splice(j, 1);
+				lives -=1;
+				score -=1;
+				break;
+	
+}}
+	
+	
+	
+	
+	
+	if (player.position.y > 800){
+	
+	lives -=1;
+	
+	}
+	
 	
 	
 	
@@ -372,7 +458,7 @@ function run()
 	{
 		bullets[i].update(deltaTime);
 		if( bullets[i].position.x < 0 || 
-		bullets[i].position.x > SCREEN_WIDTH)
+		bullets[i].position.x > player.position.x + 300 )
 		{
 			hit = true;
 		}
