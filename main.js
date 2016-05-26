@@ -72,7 +72,7 @@ function runGame(deltaTime)
 	}
 	context.translate(-viewOffset.x, 0);  
 	  drawMap();
-	  
+	
 	
 	player.update(deltaTime);
 	
@@ -120,8 +120,6 @@ function runGame(deltaTime)
 	context.font="14px Arial";
 	context.fillText("FPS: " + fps, 3, 10, 100);
 
-	
-	
 	
 	}
 function runGameOver(deltaTime)
@@ -395,12 +393,12 @@ function run()
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
 	
-//life counter
+
 		
-	context.fillStyle = "#000000";
+	context.fillStyle = "#f00";
 	context.font = "32px Ariel";
 	var scoreText = "Score: "+ score;
-	context.fillText(scoreText, SCREEN_WIDTH - 170, 35)
+	context.fillText(scoreText, SCREEN_WIDTH - 170, 52)
 	
 	
 	
@@ -413,8 +411,10 @@ function run()
 	
 	for(var i=0; i<lives; i++)
 	{
-		context.drawImage(heartImage, 20 + ((heartImage.width+2)*i), 10);
+		
+		context.drawImage(heartImage, 20 + ((heartImage.width+4)*i), 20);
 	}
+	
 	
 	
 	var deltaTime = getDeltaTime();
@@ -443,7 +443,7 @@ function run()
 	
 	
 	
-	if (player.position.y > 800){
+	if (player.position.y > 600){
 	
 	lives -=1;
 	
